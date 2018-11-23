@@ -15,8 +15,8 @@ let app = express();
 
 // adding https
 const options = {
-    key: fs.readFileSync('C:/Users/dell/Desktop/rstr/back/ssl/serverkey.key'),
-    cert: fs.readFileSync('C:/Users/dell/Desktop/rstr/back/ssl/server.crt')
+    key: fs.readFileSync('./ssl/serverkey.key'),
+    cert: fs.readFileSync('./ssl/server.crt')
 };
 
 // using cors to restrict usage
