@@ -4,7 +4,6 @@ let mongoose = require('mongoose');
 let jwt = require('jsonwebtoken');
 
 const cors = require('cors');
-let https = require('https');
 const fs = require('fs');
 let helmet = require('helmet');
 const crypto = require('crypto')
@@ -13,16 +12,10 @@ const crypto = require('crypto')
 
 let app = express();
 
-// adding https
-const options = {
-    // key: fs.readFileSync('./ssl/serverkey.key'),
-    // cert: fs.readFileSync('./ssl/server.crt')
-};
-
 // using cors to restrict usage
-app.use(cors({origin: [
-    "https://localhost:4200"
-], credentials: true}));
+// app.use(cors({origin: [
+//     "https://localhost:4200"
+// ], credentials: true}));
 
 
 // helmet() init!
@@ -240,4 +233,5 @@ function authenticationCheck(req, res, next){
 
 
 // server starting (.listen)
-https.createServer(options, app).listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
+// https.createServer(options, app).listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
+app.listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
