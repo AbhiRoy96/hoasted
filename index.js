@@ -33,7 +33,7 @@ app.disable('x-powered-by');
 
 
 // Database connections
-mongoose.connect("mongodb://localhost/resturant", { useNewUrlParser: true }).then(
+mongoose.connect("mongodb://qrtyup:9852ttyp@ds227481.mlab.com:27481/zomato-desktop", { useNewUrlParser: true }).then(
         () => {console.log("DB connected.")},
         err => {console.log(err)}
     );
