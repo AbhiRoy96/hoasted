@@ -15,7 +15,7 @@ let app = express();
 // using cors to restrict usage
 app.use(cors({origin: [
     "https://localhost:4200",
-    "https://rail-e-vendoring-system.firebaseapp.com/"
+    "https://rail-e-vendoring-system.firebaseapp.com"
 ], credentials: true}));
 
 
