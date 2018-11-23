@@ -233,5 +233,4 @@ function authenticationCheck(req, res, next){
 
 
 // server starting (.listen)
-// https.createServer(options, app).listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
 app.listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
