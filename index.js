@@ -13,9 +13,9 @@ const crypto = require('crypto')
 let app = express();
 
 // using cors to restrict usage
-// app.use(cors({origin: [
-//     "https://localhost:4200"
-// ], credentials: true}));
+app.use(cors({origin: [
+    "https://localhost:4200"
+], credentials: true}));
 
 
 // helmet() init!
