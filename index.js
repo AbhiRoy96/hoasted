@@ -14,7 +14,8 @@ let app = express();
 
 // using cors to restrict usage
 app.use(cors({origin: [
-    "https://localhost:4200"
+    "https://localhost:4200",
+    "https://rail-e-vendoring-system.firebaseapp.com/"
 ], credentials: true}));
 
 
@@ -88,20 +89,20 @@ app.get('/signup', (req, res) => {
     // console.log(__xsrf);
     
     let _sess_data = {
-        "iss": "https://localhost:4200/",
+        "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
         "session_id": __sess_id
     }
 
     jwt.sign({_sess_data}, '4E37F6EB24C177F499C491BB9748EEE2118D8F2F984E37F6AAC40F356ECCEW8I', {expiresIn: '12h'}, (err, token) =>{
         let _xsrf_data = {
-            "iss": "https://localhost:4200/",
+            "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
             "x_session_id": __sess_id,
             "xsrfToken": __xsrf
         }
         __sess = token;
         jwt.sign({_xsrf_data}, 'B48D53C2347C923E348E8E3574392923E343D53C2347CB4997CB5FCCBDB5FCCBD8EBDC491BB9748EEE', {expiresIn: '15m'}, (err, x_token) =>{
             let _data = {
-                "iss": "https://localhost:4200/",
+                "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
                 "x_sess_id": __sess,
                 "xsrfToken": x_token
             }
@@ -121,13 +122,13 @@ app.get('/signup/refresh', authenticationCheck, (req, res) => {
     hmac.update(uuidv4() + new Date());
     let __xsrf = hmac.digest('hex');
     let _xsrf_data = {
-        "iss": "https://localhost:4200/",
+        "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
         "x_session_id": req.token,
         "xsrfToken": __xsrf
     }
     jwt.sign({_xsrf_data}, 'B48D53C2347C923E348E8E3574392923E343D53C2347CB4997CB5FCCBDB5FCCBD8EBDC491BB9748EEE', {expiresIn: '15m'}, (err, x_token) =>{
         let _data = {
-            "iss": "https://localhost:4200/",
+            "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
             "x_sess_id": req.headers['authorization'],
             "xsrfToken": x_token
         }
@@ -158,11 +159,11 @@ app.post('/signup/register', authenticationCheck, (req, res) => {
             user_data = {
                 "_usid_": userSessionToken,
                 "acc": ["/profile", "/order", "/cart"],
-                "issuer": "https://localhost:4200/",
+                "issuer": "https://rail-e-vendoring-system.firebaseapp.com/",
             }
             jwt.sign({user_data}, '472B4B6250655367566B5970337336763979244226452948404D635166546A57', {expiresIn: '12h'}, (err, token) =>{
                 let _data = {
-                    "iss": "https://localhost:4200/",
+                    "iss": "https://rail-e-vendoring-system.firebaseapp.com/",
                     "__usid": token,
                     "status": 200,
                     "message": "Sign Up Successful!",
@@ -179,11 +180,12 @@ app.post('/signup/register', authenticationCheck, (req, res) => {
 
 
 function verifyDomain(req, res, next) {
-    let pattern = /^(https:\/\/localhost:4200\/)/g
+    let pattern = /^(https:\/\/localhost:4200\/)/g;
+    let pattern2 = /^(https:\/\/rail-e-vendoring-system.firebaseapp.com\/)/g;
     // for deployment
     let reqHeaderHost = req.get('Referer');
 
-    if(pattern.exec(reqHeaderHost)) {
+    if(pattern.exec(reqHeaderHost)||pattern2.exec(reqHeaderHost)) {
         next();
     } else {
       // Forbidden
@@ -202,8 +204,9 @@ function uuidv4() {
 
 // Authentication
 function authenticationCheck(req, res, next){
-    let pattern = /^(https:\/\/localhost:4200\/)/g
-    if(pattern.exec(req.get('Referer'))) {
+    let pattern = /^(https:\/\/localhost:4200\/)/g;
+    let pattern2 = /^(https:\/\/rail-e-vendoring-system.firebaseapp.com\/)/g;
+    if(pattern.exec(req.get('Referer'))||pattern2.exec(req.get('Referer'))) {
         sessId = req.headers['authorization'];
         jwt.verify(sessId, '4E37F6EB24C177F499C491BB9748EEE2118D8F2F984E37F6AAC40F356ECCEW8I', (err, authData) => {
             if(err){
