@@ -15,8 +15,8 @@ let app = express();
 
 // adding https
 const options = {
-    key: fs.readFileSync('./ssl/serverkey.key'),
-    cert: fs.readFileSync('./ssl/server.crt')
+    // key: fs.readFileSync('./ssl/serverkey.key'),
+    // cert: fs.readFileSync('./ssl/server.crt')
 };
 
 // using cors to restrict usage
@@ -211,4 +211,4 @@ function authenticationCheck(req, res, next){
 
 
 // server starting (.listen)
-https.createServer(options, app).listen(3000, ()=>{console.log("Server running on Port 3000, https://localhost:3000/?")});
+https.createServer(options, app).listen(process.env.PORT || 5000, ()=>{console.log("Server running on Port 3000, https://localhost:"+ process.env.PORT +"/?")});
